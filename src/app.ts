@@ -1,4 +1,6 @@
 import ProjectInput from "./components/ProjectInput.js";
 
-const projectInput = new ProjectInput();
-console.log(projectInput);
+document.addEventListener("DOMContentLoaded", () => {
+  const projectInput = new ProjectInput();
+  console.log(projectInput);
+});
