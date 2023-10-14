@@ -60,15 +60,37 @@ class ProjectInput {
   private attach() {
     this.hostElement.append(this.element);
   }
+  private gatherUserInput(): [string, string, number] | void {
+    const userTitleInput = this.titleInputElement.value;
+    const userDescriptionInput = this.descriptionInputElement.value;
+    const userPeopleInputString = this.peopleInputElement.value;
+    const userPeopleInput = Number(userPeopleInputString);
+    if (
+      userTitleInput.trim().length === 0 ||
+      userDescriptionInput.trim().length === 0 ||
+      isNaN(userPeopleInput) ||
+      userPeopleInput <= 0
+    ) {
+      alert("Invalid Input!");
+      return;
+    }
+    return [userTitleInput, userDescriptionInput, userPeopleInput];
+  }
+  private clearInputs() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.peopleInputElement.value = "";
+  }
 
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(
-      this.titleInputElement.value,
-      this.descriptionInputElement.value,
-      this.peopleInputElement.value
-    );
+    const userInput = this.gatherUserInput();
+    if (Array.isArray(userInput)) {
+      const [title, description, people] = userInput;
+      console.log(title, description, people);
+      this.clearInputs();
+    }
   }
 }
 
