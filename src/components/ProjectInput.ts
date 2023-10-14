@@ -1,3 +1,4 @@
+import { Validatable, validate } from "../helpers/validation.js";
 const Autobind = (
   _target: any,
   _methodName: string,
@@ -61,20 +62,50 @@ class ProjectInput {
     this.hostElement.append(this.element);
   }
   private gatherUserInput(): [string, string, number] | void {
-    const userTitleInput = this.titleInputElement.value;
-    const userDescriptionInput = this.descriptionInputElement.value;
-    const userPeopleInputString = this.peopleInputElement.value;
-    const userPeopleInput = Number(userPeopleInputString);
-    if (
-      userTitleInput.trim().length === 0 ||
-      userDescriptionInput.trim().length === 0 ||
-      isNaN(userPeopleInput) ||
-      userPeopleInput <= 0
-    ) {
-      alert("Invalid Input!");
+    const titleValidatable: Validatable = {
+      value: this.titleInputElement.value,
+      required: true,
+      minLength: 1,
+    };
+
+    const descriptionValidatable: Validatable = {
+      value: this.descriptionInputElement.value,
+      required: true,
+      minLength: 3,
+    };
+
+    const peopleInputValue = +this.peopleInputElement.value;
+    const peopleValidatable: Validatable = {
+      value: peopleInputValue,
+      required: true,
+      min: 1,
+      max: 10,
+    };
+    if (isNaN(+peopleInputValue)) {
+      alert("Invalid Number of People!");
       return;
     }
-    return [userTitleInput, userDescriptionInput, userPeopleInput];
+
+    if (!validate(titleValidatable)) {
+      alert("Invalid Title!");
+      return;
+    }
+
+    if (!validate(descriptionValidatable)) {
+      alert("Invalid Description!");
+      return;
+    }
+
+    if (!validate(peopleValidatable)) {
+      alert("Invalid Number of People!");
+      return;
+    }
+
+    return [
+      this.titleInputElement.value,
+      this.descriptionInputElement.value,
+      +this.peopleInputElement.value,
+    ];
   }
   private clearInputs() {
     this.titleInputElement.value = "";
