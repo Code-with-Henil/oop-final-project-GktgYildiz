@@ -1,4 +1,5 @@
 import { Validatable, validate } from "../helpers/validation.js";
+import { projectState } from "./ProjectState.js";
 const Autobind = (
   _target: any,
   _methodName: string,
@@ -116,6 +117,11 @@ class ProjectInput {
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
+    projectState.addProject(
+      this.titleInputElement.value,
+      this.descriptionInputElement.value,
+      +this.peopleInputElement.value
+    );
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [title, description, people] = userInput;
