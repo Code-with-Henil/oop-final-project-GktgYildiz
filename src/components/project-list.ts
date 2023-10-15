@@ -1,4 +1,4 @@
-import { Project } from "../models/Project.js";
+import { Project, ProjectStatus } from "../models/Project.js";
 import { projectState } from "./ProjectState.js";
 
 class ProjectList {
@@ -24,7 +24,13 @@ class ProjectList {
     this.element.id = `${this.type}-projects`;
 
     projectState.addListener((projects: Project[]) => {
-      this.assignedProjects = projects;
+      this.assignedProjects = projects.filter((project: Project) => {
+        if (this.type === "active") {
+          return project.status === ProjectStatus.Active;
+        } else {
+          return project.status === ProjectStatus.Finished;
+        }
+      });
       this.renderProjects();
     });
     this.attach();
@@ -38,6 +44,7 @@ class ProjectList {
     const listElements = document.getElementById(
       `${this.type}-projects-list`
     )! as HTMLUListElement;
+    listElements.innerHTML = "";
     for (const Item of this.assignedProjects) {
       const listItem = document.createElement("li");
       listItem.textContent = Item.title;
