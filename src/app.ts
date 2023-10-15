@@ -1,5 +1,5 @@
 import ProjectInput from "./components/ProjectInput.js";
-import ProjectList from "./components/project-list.js";
+import ProjectList from "./components/ProjectList.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const projectInput = new ProjectInput();
