@@ -1,3 +1,4 @@
+import { Component } from "../components/BaseComponent.js";
 import { Validatable, validate } from "../helpers/validation.js";
 import { projectState } from "./ProjectState.js";
 const Autobind = (
@@ -5,7 +6,6 @@ const Autobind = (
   _methodName: string,
   descriptor: PropertyDescriptor
 ) => {
-  // console.log("descriptor", descriptor);
   const originalMethod = descriptor.value;
   const adjustedDescriptor: PropertyDescriptor = {
     configurable: true,
@@ -17,31 +17,13 @@ const Autobind = (
   return adjustedDescriptor;
 };
 
-class ProjectInput {
-  //step 1
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  private element: HTMLFormElement;
-  //step 2
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
 
   constructor() {
-    this.templateElement = document.getElementById(
-      "project-input"
-    ) as HTMLTemplateElement;
-    this.hostElement = document.getElementById("app") as HTMLDivElement;
-
-    // Get the content of the template
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    // Get the form element from the template
-    this.element = importedNode.firstElementChild as HTMLFormElement;
-    // Add a new id to the form
-    this.element.id = "user-input";
+    super("project-input", "app", "user-input");
     this.titleInputElement = this.element.querySelector(
       "#title"
     ) as HTMLInputElement;
@@ -51,17 +33,14 @@ class ProjectInput {
     this.peopleInputElement = this.element.querySelector(
       "#people"
     ) as HTMLInputElement;
-    // Attach the form to the host element
-    this.attach();
+
     this.configure();
   }
-
-  private configure() {
+  configure() {
     this.element.addEventListener("submit", this.submitHandler.bind(this));
   }
-  private attach() {
-    this.hostElement.append(this.element);
-  }
+  renderContent() {}
+
   private gatherUserInput(): [string, string, number] | void {
     const titleValidatable: Validatable = {
       value: this.titleInputElement.value,
