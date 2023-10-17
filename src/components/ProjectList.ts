@@ -2,8 +2,13 @@ import { Component } from "../components/BaseComponent.js";
 import { Project, ProjectStatus } from "../models/Project.js";
 import { projectState } from "./ProjectState.js";
 import { ProjectItem } from "./ProjectItem.js";
+import { DragTarget } from "../helpers/DragDrop.js";
+import { Autobind } from "../decorator/autobind.js";
 
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+class ProjectList
+  extends Component<HTMLDivElement, HTMLElement>
+  implements DragTarget
+{
   assignedProjects: Project[] = [];
 
   constructor(private type: "active" | "finished") {
@@ -11,6 +16,22 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     this.assignedProjects = [];
     this.configure();
     this.renderContent();
+  }
+  @Autobind
+  dragOverHandler() {
+    const listEl = this.element.querySelector("ul");
+    listEl?.classList.add("droppable");
+    console.log("drag over");
+  }
+  @Autobind
+  dropHandler() {
+    console.log("drop");
+  }
+  @Autobind
+  dragLeaveHandler() {
+    console.log("drag leave");
+    const listEl = this.element.querySelector("ul");
+    listEl?.classList.remove("droppable");
   }
   configure() {
     projectState.addListener((projects: Project[]) => {
@@ -24,6 +45,9 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
       this.assignedProjects = filterProjects;
       this.renderProjects();
     });
+    this.element.addEventListener("dragover", this.dragOverHandler);
+    this.element.addEventListener("drop", this.dropHandler);
+    this.element.addEventListener("dragleave", this.dragLeaveHandler);
   }
 
   private renderProjects() {
