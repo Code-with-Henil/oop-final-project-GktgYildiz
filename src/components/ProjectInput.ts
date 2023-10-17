@@ -1,21 +1,7 @@
 import { Component } from "../components/BaseComponent.js";
 import { Validatable, validate } from "../helpers/validation.js";
 import { projectState } from "./ProjectState.js";
-const Autobind = (
-  _target: any,
-  _methodName: string,
-  descriptor: PropertyDescriptor
-) => {
-  const originalMethod = descriptor.value;
-  const adjustedDescriptor: PropertyDescriptor = {
-    configurable: true,
-    get() {
-      const boundFn = originalMethod.bind(this);
-      return boundFn;
-    },
-  };
-  return adjustedDescriptor;
-};
+import { Autobind } from "../decorator/autobind.js";
 
 class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
