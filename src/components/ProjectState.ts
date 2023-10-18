@@ -22,13 +22,22 @@ class ProjectState {
       ProjectStatus.Active
     );
     this.projects.push(addProject);
-
+    this.updateListeners();
+  }
+  updateListeners() {
     this.listeners.forEach((listener) => {
       listener([...this.projects]);
     });
   }
   addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
+  }
+  moveProject(projectId: string, newStatus: ProjectStatus) {
+    const foundProject = this.projects.find((p) => p.id === projectId);
+    if (foundProject !== undefined && newStatus !== foundProject.status) {
+      foundProject.status = newStatus;
+      this.updateListeners();
+    }
   }
 }
 export const projectState = ProjectState.getInstance();

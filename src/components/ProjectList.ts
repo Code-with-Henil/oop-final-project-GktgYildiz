@@ -28,7 +28,10 @@ class ProjectList
   @Autobind
   dropHandler(event: DragEvent) {
     const projectId = event.dataTransfer!.getData("text/plain");
-    console.log(projectId);
+    projectState.moveProject(
+      projectId,
+      this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished
+    );
   }
   @Autobind
   dragLeaveHandler() {
