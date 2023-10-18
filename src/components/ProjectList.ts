@@ -18,14 +18,17 @@ class ProjectList
     this.renderContent();
   }
   @Autobind
-  dragOverHandler() {
+  dragOverHandler(event: DragEvent) {
+    if (event.dataTransfer && event.dataTransfer.types[0] === "text/plain") {
+      event.preventDefault();
+    }
     const listEl = this.element.querySelector("ul");
     listEl?.classList.add("droppable");
-    console.log("drag over");
   }
   @Autobind
-  dropHandler() {
-    console.log("drop");
+  dropHandler(event: DragEvent) {
+    const projectId = event.dataTransfer!.getData("text/plain");
+    console.log(projectId);
   }
   @Autobind
   dragLeaveHandler() {
