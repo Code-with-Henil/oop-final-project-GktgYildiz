@@ -6,9 +6,6 @@
 https://github.com/Code-with-Henil/oop-final-project-GktgYildiz/assets/102765970/4bedb597-127f-4349-affb-c2814291546b
 
 
-https://github.com/Code-with-Henil/oop-final-project-GktgYildiz/assets/102765970/4e07a6e6-28f0-4a05-a6c9-dfe1aa1383a4
-
-
 ## Description
 
 This project is a simple drag-n-drop project using TypeScript. Users can drag-n-drop projects between different sections of the page.
