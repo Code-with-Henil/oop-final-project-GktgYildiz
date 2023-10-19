@@ -3,8 +3,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/030Ac07p)
 
 # Drag-n-Drop Project - TypeScript
-
-<video src="public/video/dragndrop.mp4" controls title="Title" height="800px" ></video>
+https://github.com/Code-with-Henil/oop-final-project-GktgYildiz/assets/102765970/4bedb597-127f-4349-affb-c2814291546b
 
 
 https://github.com/Code-with-Henil/oop-final-project-GktgYildiz/assets/102765970/4e07a6e6-28f0-4a05-a6c9-dfe1aa1383a4
